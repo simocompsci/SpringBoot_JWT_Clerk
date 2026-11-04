@@ -1,10 +1,14 @@
 import { SignIn } from "@clerk/nextjs";
+import { Suspense } from "react";
 
 
 export default function SignInPage() {
   return (
     <div className="flex w-full max-w-md flex-col items-center gap-8">
-      <SignIn />
+      <Suspense fallback={<div>Loading sign-in...</div>}>
+        <SignIn />
+      </Suspense>
+
     </div>
   );
 }
