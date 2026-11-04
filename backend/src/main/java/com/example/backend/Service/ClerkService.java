@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.backend.Entity.User;
-import com.example.backend.Repository.UserRepository;
+import com.example.backend.Entity.Student;
+import com.example.backend.Repository.StudentRepository;
 
 import tools.jackson.databind.JsonNode;
 
@@ -13,11 +13,11 @@ import tools.jackson.databind.JsonNode;
 @Service 
 public class ClerkService {
 
-    private final UserRepository userRepository;
+    private  final StudentRepository studentRepo;
 
 
-    public UserService(UserRepository userRepository){
-        this.userRepository = userRepository;
+    public ClerkService(StudentRepository studentRepo){
+        this.studentRepo = studentRepo;
     }
 
     /**
@@ -41,26 +41,25 @@ public class ClerkService {
 
         String firstName = getNullableText(clerkUser, "first_name");
         String lastName = getNullableText(clerkUser, "last_name");
-        String username = getNullableText(clerkUser, "username");
 
         /*
          * ---------------------------------------------------------
-         * Find existing local user
+         * Find existing local student
          * ---------------------------------------------------------
          */
 
-        Optional<User> existingUser = userRepository.findByClerkId(clerkId);
+        Optional<Student> existingStudent = studentRepo.findByClerkId(clerkId);
 
-        User user;
+        Student student;
 
-        if (existingUser.isPresent()) {
+        if (existingStudent.isPresent()) {
 
             /*
-             * User already exists.
+             * studnet already exists.
              *
              * Update the local copy with Clerk's latest data.
              */
-            user = existingUser.get();
+            student = existingStudent.get();
 
         } else {
 
@@ -69,9 +68,9 @@ public class ClerkService {
              *
              * Create it.
              */
-            user = new User();
+            student = new Student();
 
-            user.setClerkId(clerkId);
+            student.setClerkId(clerkId);
         }
 
         /*
@@ -80,12 +79,11 @@ public class ClerkService {
          * ---------------------------------------------------------
          */
 
-        user.setEmail(primaryEmail);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setUsername(username);
+        student.setEmail(primaryEmail);
+        student.setFirstName(firstName);
+        student.setLastName(lastName);
 
-        userRepository.save(user);
+        studentRepo.save(student);
     }
 
     /**
@@ -99,8 +97,8 @@ public class ClerkService {
             return;
         }
 
-        userRepository.findByClerkId(clerkId)
-                .ifPresent(userRepository::delete);
+        studentRepo.findByClerkId(clerkId)
+                .ifPresent(studentRepo::delete);
     }
 
     /**
