@@ -38,22 +38,6 @@ public class Student {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(name = "date_of_birth")
-    private LocalDate dateOfBirth;
-
-    @Column(name = "phone_number", length = 20)
-    private String phoneNumber;
-
-    @Column(name = "student_number", nullable = false, unique = true)
-    private String studentNumber;
-
-    @Column(name = "enrollment_date", nullable = false)
-    private LocalDate enrollmentDate;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private StudentStatus status = StudentStatus.ACTIVE;
-
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<Grade> grades = new ArrayList<>();
 
