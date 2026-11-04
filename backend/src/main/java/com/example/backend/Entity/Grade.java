@@ -1,6 +1,5 @@
 package com.example.backend.Entity;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
@@ -17,28 +16,22 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(
-    name = "grades",
-    uniqueConstraints = {
-        @UniqueConstraint(
-            name = "uk_student_course_assessment",
-            columnNames = {
+@Table(name = "grades", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_student_course_assessment", columnNames = {
                 "student_id",
                 "course_id",
                 "academic_year",
                 "semester",
                 "exam_type"
-            }
-        )
-    }
-)
+        })
+})
 @Getter
 @Setter
 @NoArgsConstructor
 public class Grade {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

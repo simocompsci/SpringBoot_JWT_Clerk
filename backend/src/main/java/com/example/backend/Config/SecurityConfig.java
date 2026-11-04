@@ -27,7 +27,6 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/webhooks/clerk").permitAll()
-                        .requestMatchers("/api/v1/manga/*").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(
                         jwtFilter,

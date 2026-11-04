@@ -13,13 +13,13 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "students")
-@Getter 
+@Getter
 @Setter
 @NoArgsConstructor
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "clerk_id", nullable = false, unique = true)

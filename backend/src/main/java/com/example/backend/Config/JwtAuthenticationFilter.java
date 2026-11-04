@@ -56,15 +56,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        Optional<Student> maybeUser = studentRepo.findByClerkId(clerkId);
+        Optional<Student> maybeStudent = studentRepo.findByClerkId(clerkId);
 
-        if (maybeUser.isEmpty()) {
+        if (maybeStudent.isEmpty()) {
             reject(response, "No local user record for this token");
             return;
         }
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                maybeUser.get(),
+                maybeStudent.get(),
                 null,
                 List.of());
 
