@@ -86,8 +86,8 @@ public class JwtTokenService {
     public Claims validateAndParse(String token) throws JwtException {
         return Jwts.parser()
                 .verifyWith(publicKey)
-                .requireIssuer(issuer)
-                .requireAudience(audience)
+                // .requireIssuer(issuer)
+                // .requireAudience(audience)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();

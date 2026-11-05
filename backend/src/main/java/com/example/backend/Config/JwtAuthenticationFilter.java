@@ -1,5 +1,5 @@
-package com.example.backend.Config;
 
+package com.example.backend.Config;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,41 +46,40 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = authHeader.substring(7);
 
-        String clerkId;
-
         try {
-            clerkId = tokenService.extractClerkUserId(token);
+            String clerkId = tokenService.extractClerkUserId(token);
 
-        } catch (JwtException e) {
+            Optional<Student> maybeStudent = studentRepo.findByClerkId(clerkId);
+
+            if (maybeStudent.isEmpty()) {
+                reject(response, "No local user record for this token");
+                return;
+            }
+
+            Student student = maybeStudent.get();
+
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    student,
+                    null,
+                    List.of());
+
+            authentication.setDetails(
+                    new WebAuthenticationDetailsSource()
+                            .buildDetails(request));
+
+            SecurityContextHolder.getContext()
+                    .setAuthentication(authentication);
+
+            chain.doFilter(request, response);
+
+        } catch (JwtException | IllegalArgumentException e) {
             reject(response, "Invalid or expired token");
-            return;
         }
-
-        Optional<Student> maybeStudent = studentRepo.findByClerkId(clerkId);
-
-        if (maybeStudent.isEmpty()) {
-            reject(response, "No local user record for this token");
-            return;
-        }
-
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                maybeStudent.get(),
-                null,
-                List.of());
-
-        authentication.setDetails(
-                new WebAuthenticationDetailsSource()
-                        .buildDetails(request));
-
-        SecurityContextHolder
-                .getContext()
-                .setAuthentication(authentication);
-
-        chain.doFilter(request, response);
     }
 
-    private void reject(HttpServletResponse response, String message)
-            throws IOException {
+    private void reject(
+            HttpServletResponse response,
+            String message) throws IOException {
 
         SecurityContextHolder.clearContext();
 

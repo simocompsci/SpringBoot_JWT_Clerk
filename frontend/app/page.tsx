@@ -7,7 +7,6 @@ export default function Home() {
     <div>
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white">
         <h1 className="text-black">Welcome to your student portal</h1>
-        <Suspense fallback={<p>Loading...</p>}>
           <Show when="signed-out">
             <Link href={"sign-in"}>
               <button className="bg-black py-2 px-3">Sign in</button>
@@ -18,7 +17,6 @@ export default function Home() {
             <p className="text-black">You are signed in!</p>
             <UserButton />
           </Show>
-        </Suspense>
       </main>
     </div>
   );
