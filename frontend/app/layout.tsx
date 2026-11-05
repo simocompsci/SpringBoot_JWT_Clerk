@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Geist, Geist_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 
 const geistSans = Geist({
@@ -11,6 +12,13 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+})
+
+const matcha = localFont({
+  src: '../fonts/Matcha Style.ttf',
+  weight: '400',
+  variable: '--font-matcha-raw',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -27,9 +35,9 @@ export default function RootLayout({
     <ClerkProvider>
       <html
         lang="en"
-        className={`${geistSans.variable} ${geistMono.variable}`}
+        className={`${geistSans.variable} ${geistMono.variable} ${matcha.variable}`}
       >
-        <body className="flex min-h-dvh flex-col font-sans bg-carbon">
+        <body className="flex min-h-dvh flex-col font-sans">
           {children}
         </body>
       </html>

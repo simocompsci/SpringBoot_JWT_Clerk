@@ -9,6 +9,7 @@ export default function SignInPage() {
           appearance={{
             theme: 'simple',
           }}
+          fallbackRedirectUrl="/workspace"
         />
       </Suspense>
     </div>
