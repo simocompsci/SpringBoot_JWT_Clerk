@@ -38,14 +38,15 @@ public interface GradeRepository extends JpaRepository<Grade, UUID> {
                 SELECT new com.example.backend.DTO.CourseAverageDTO(
                     c.code,
                     c.name,
+                    c.semester,
                     SUM(g.score * g.coefficient) / SUM(g.coefficient)
                 )
                 FROM Grade g
                 JOIN g.student s
                 JOIN g.course c
                 WHERE s.clerkId = :clerkId
-                GROUP BY c.code, c.name
-                ORDER BY c.name
+                GROUP BY c.code, c.name, c.semester
+                ORDER BY c.semester, c.name
             """)
     List<CourseAverageDTO> findCoursesAverageByClerkId(@Param("clerkId") String clerkId);
 

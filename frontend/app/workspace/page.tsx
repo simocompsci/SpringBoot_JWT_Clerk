@@ -1,24 +1,36 @@
-import { UserButton } from "@clerk/nextjs";
+import {
+  buildSemesterSections,
+  mockCourseAverages,
+  mockSemesterAverages,
+} from "@/lib/workspace-data";
+import { SemesterSection } from "./_components/SemesterSection";
 
 export default function WorkspacePage() {
-  return (
-    <main className="flex min-h-dvh flex-col bg-white">
-      <header className="flex items-center justify-between border-b border-neutral-200 px-6 py-4 sm:px-10">
-        <span className="font-matcha text-2xl text-black">
-          Students Portal
-        </span>
-        <UserButton />
-      </header>
+  const sections = buildSemesterSections(
+    mockSemesterAverages,
+    mockCourseAverages,
+  );
 
-      <section className="flex flex-1 flex-col items-center justify-center px-6 py-16 text-center">
-        <h1 className="font-matcha text-5xl leading-tight text-black sm:text-6xl">
-          Welcome to your workspace
+  return (
+    <>
+      <div className="mb-10">
+        <h1 className="font-matcha text-4xl leading-tight text-black sm:text-5xl">
+          Overview
         </h1>
-        <p className="mt-6 max-w-xl text-base leading-relaxed text-neutral-600 sm:text-lg">
-          You are signed in. This is your student workspace — your dashboard
-          content will appear here.
+        <p className="mt-2 text-sm leading-relaxed text-neutral-500 sm:text-base">
+          Your grades and averages by semester.
         </p>
-      </section>
-    </main>
+      </div>
+
+      <div className="flex flex-col gap-10">
+        {sections.map((section, index) => (
+          <SemesterSection
+            key={section.semester}
+            section={section}
+            reversed={index % 2 === 1}
+          />
+        ))}
+      </div>
+    </>
   );
 }
