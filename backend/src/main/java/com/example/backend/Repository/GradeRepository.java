@@ -31,8 +31,7 @@ public interface GradeRepository extends JpaRepository<Grade, UUID> {
                 WHERE s.clerkId = :clerkId
                 ORDER BY g.semester, c.code
             """)
-    List<GradeResponseDTO> findGradesByStudentClerkId(
-            @Param("clerkId") String clerkId);
+    List<GradeResponseDTO> findGradesByStudentClerkId(@Param("clerkId") String clerkId);
 
     // Get every course average for the authenticated student
     @Query("""
@@ -48,8 +47,7 @@ public interface GradeRepository extends JpaRepository<Grade, UUID> {
                 GROUP BY c.code, c.name
                 ORDER BY c.name
             """)
-    List<CourseAverageDTO> findCoursesAverageByClerkId(
-            @Param("clerkId") String clerkId);
+    List<CourseAverageDTO> findCoursesAverageByClerkId(@Param("clerkId") String clerkId);
 
     @Query("""
                 SELECT new com.example.backend.DTO.SemesterAverageDTO(
@@ -64,6 +62,5 @@ public interface GradeRepository extends JpaRepository<Grade, UUID> {
                 GROUP BY g.semester
                 ORDER BY g.semester
             """)
-    List<SemesterAverageDTO> findSemesterAveragesByClerkId(
-            @Param("clerkId") String clerkId);
+    List<SemesterAverageDTO> findSemesterAveragesByClerkId(@Param("clerkId") String clerkId);
 }
