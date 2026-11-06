@@ -1,7 +1,8 @@
-import type { ExamType, GradeRow } from "@/lib/grades-data";
+import type { ExamType } from "@/lib/grades-data";
+import { GradeResponse } from "@/lib/types";
 
 type GradesTableProps = {
-  rows: GradeRow[];
+  rows: GradeResponse[] | null;
 };
 
 function formatNumber(value: number): string {
@@ -38,6 +39,9 @@ export function GradesTable({ rows }: GradesTableProps) {
               Score
             </th>
             <th scope="col" className={`${headerCell} text-right`}>
+              Grade
+            </th>
+            <th scope="col" className={`${headerCell} text-right`}>
               Credits
             </th>
             <th scope="col" className={`${headerCell} text-right`}>
@@ -50,7 +54,7 @@ export function GradesTable({ rows }: GradesTableProps) {
         </thead>
 
         <tbody>
-          {rows.length === 0 ? (
+          {rows === null ? (
             <tr>
               <td
                 colSpan={7}
@@ -80,6 +84,9 @@ export function GradesTable({ rows }: GradesTableProps) {
                 </td>
                 <td className={`${numericCell} font-semibold text-black`}>
                   {formatNumber(row.score)}
+                </td>
+                <td className={`${numericCell} font-semibold text-black`}>
+                  {(row.letterGrade)}
                 </td>
                 <td className={`${numericCell} text-neutral-700`}>
                   {row.credits}
