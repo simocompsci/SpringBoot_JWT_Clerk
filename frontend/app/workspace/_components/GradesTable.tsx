@@ -1,8 +1,7 @@
-import type { ExamType } from "@/lib/grades-data";
-import { GradeResponse } from "@/lib/types";
+import type { ExamType, GradeResponse } from "@/lib/types";
 
 type GradesTableProps = {
-  rows: GradeResponse[] | null;
+  rows: GradeResponse[];
 };
 
 function formatNumber(value: number): string {
@@ -54,19 +53,19 @@ export function GradesTable({ rows }: GradesTableProps) {
         </thead>
 
         <tbody>
-          {rows === null ? (
+          {rows.length === 0 ? (
             <tr>
               <td
-                colSpan={7}
+                colSpan={8}
                 className="px-5 py-12 text-center text-sm text-neutral-500"
               >
                 No grades have been recorded yet.
               </td>
             </tr>
           ) : (
-            rows.map((row, index) => (
+            rows.map((row) => (
               <tr
-                key={`${row.code}-${row.examType}-${index}`}
+                key={`${row.code}-${row.semester}-${row.examType}`}
                 className="border-t border-neutral-200 transition-colors hover:bg-neutral-50"
               >
                 <td
@@ -86,7 +85,7 @@ export function GradesTable({ rows }: GradesTableProps) {
                   {formatNumber(row.score)}
                 </td>
                 <td className={`${numericCell} font-semibold text-black`}>
-                  {(row.letterGrade)}
+                  {row.letterGrade ?? "—"}
                 </td>
                 <td className={`${numericCell} text-neutral-700`}>
                   {row.credits}

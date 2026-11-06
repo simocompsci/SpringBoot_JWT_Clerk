@@ -1,4 +1,5 @@
-import { formatAverage, type CourseAverage } from "@/lib/workspace-data";
+import { formatAverage } from "@/lib/workspace";
+import type { CourseAverage } from "@/lib/types";
 
 type CourseAverageCardProps = {
   course: CourseAverage;

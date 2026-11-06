@@ -1,4 +1,4 @@
-import type { SemesterSectionData } from "@/lib/workspace-data";
+import type { SemesterSectionData } from "@/lib/types";
 import { CourseAverageCard } from "./CourseAverageCard";
 import { SemesterAverageCard } from "./SemesterAverageCard";
 

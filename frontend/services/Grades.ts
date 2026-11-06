@@ -1,14 +1,11 @@
-import api from "@/lib/api";
-import { GradeResponse } from "@/lib/types";
+import api, { getAuthHeaders } from "@/lib/api";
+import type { GradeResponse } from "@/lib/types";
 
-export async function getStudentGrades(getToken: () => Promise<string | null>) {
-    
-  const token = await getToken();
-
+export async function getStudentGrades(
+  getToken: () => Promise<string | null>,
+) {
   const response = await api.get<GradeResponse[]>("/grades", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: await getAuthHeaders(getToken),
   });
 
   return response.data;

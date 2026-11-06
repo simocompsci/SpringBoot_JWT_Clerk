@@ -1,16 +1,6 @@
-import {
-  buildSemesterSections,
-  mockCourseAverages,
-  mockSemesterAverages,
-} from "@/lib/workspace-data";
-import { SemesterSection } from "./_components/SemesterSection";
+import { OverviewContent } from "./_components/OverviewContent";
 
 export default function WorkspacePage() {
-  const sections = buildSemesterSections(
-    mockSemesterAverages,
-    mockCourseAverages,
-  );
-
   return (
     <>
       <div className="mb-10">
@@ -22,15 +12,7 @@ export default function WorkspacePage() {
         </p>
       </div>
 
-      <div className="flex flex-col gap-10">
-        {sections.map((section, index) => (
-          <SemesterSection
-            key={section.semester}
-            section={section}
-            reversed={index % 2 === 1}
-          />
-        ))}
-      </div>
+      <OverviewContent />
     </>
   );
 }

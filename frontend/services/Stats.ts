@@ -1,29 +1,24 @@
-import api from "@/lib/api";
+import api, { getAuthHeaders } from "@/lib/api";
+import type { CourseAverage, SemesterAverage } from "@/lib/types";
 
-import { CourseAverage , SemesterAverage } from "@/lib/workspace-data";
-
-export async function getCoursesAverage( getToken: () => Promise<string | null> ) {
-
-  const token = await getToken();
-
+export async function getCoursesAverage(
+  getToken: () => Promise<string | null>,
+) {
   const response = await api.get<CourseAverage[]>("/stats/courses/average", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: await getAuthHeaders(getToken),
   });
 
   return response.data;
 }
 
-export async function getSemesterAverage( getToken: () => Promise<string | null> ) {
-
-  const token = await getToken();
-
-  const response = await api.get<SemesterAverage[]>("/stats/semesters/average", {
-    headers: {
-      Authorization: `Bearer ${token}`,
+export async function getSemesterAverage(
+  getToken: () => Promise<string | null>,
+) {
+  const response = await api.get<SemesterAverage[]>("/stats/semesters/average",
+    {
+      headers: await getAuthHeaders(getToken),
     },
-  });
+  );
 
   return response.data;
 }
