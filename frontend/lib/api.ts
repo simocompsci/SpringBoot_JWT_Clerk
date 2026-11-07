@@ -10,9 +10,7 @@ const api = axios.create({
   },
 });
 
-export async function getAuthHeaders(
-  getToken: () => Promise<string | null>,
-) {
+export async function getAuthHeaders( getToken: () => Promise<string | null>) {
   const token = await getToken();
 
   if (!token) {
