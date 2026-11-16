@@ -6,6 +6,7 @@ target/
 
 .env*
 
+certifs
 
 ### STS ###
 .apt_generated

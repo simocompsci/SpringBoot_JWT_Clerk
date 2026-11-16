@@ -18,17 +18,12 @@ public class JwtTokenService {
     private static final String KEY_SOURCE = "CLERK_JWT_PUBLIC_KEY";
 
     private final PublicKey publicKey;
-    private final String issuer;
-    private final String audience;
 
     public JwtTokenService(
-            @Value("${clerk.jwt.public-key}") String publicKeyPem,
-            @Value("${clerk.jwt.issuer}") String issuer,
-            @Value("${clerk.jwt.audience}") String audience) {
+            @Value("${clerk.jwt.public-key}") String publicKeyPem) {
 
         this.publicKey = parsePublicKey(publicKeyPem);
-        this.issuer = issuer;
-        this.audience = audience;
+
 
     }
 
@@ -86,8 +81,6 @@ public class JwtTokenService {
     public Claims validateAndParse(String token) throws JwtException {
         return Jwts.parser()
                 .verifyWith(publicKey)
-                // .requireIssuer(issuer)
-                // .requireAudience(audience)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
@@ -97,3 +90,5 @@ public class JwtTokenService {
         return validateAndParse(token).getSubject();
     }
 }
+
+
